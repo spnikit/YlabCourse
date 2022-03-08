@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 
 class GameBoard {
     private final String[][] board = new String[][]{
-            {"X", "-", "O"},
-            {"O", "X", "-"},
-            {"X", "X", "O"}
+            {"-", "-", "-"},
+            {"-", "-", "-"},
+            {"-", "-", "-"}
     };
 
     public void acceptMove(int xPoint, int yPoint, Token token) throws IllegalArgumentException {

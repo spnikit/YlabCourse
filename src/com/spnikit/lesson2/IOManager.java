@@ -80,7 +80,7 @@ class IOManager {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./gameResults.txt"),
                 StandardOpenOption.CREATE, StandardOpenOption.APPEND)
         ) {
-            writer.write(results);
+            writer.write(results + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

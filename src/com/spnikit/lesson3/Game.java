@@ -1,4 +1,4 @@
-package com.spnikit.lesson2;
+package com.spnikit.lesson3;
 
 import java.io.IOException;
 import java.time.LocalDate;

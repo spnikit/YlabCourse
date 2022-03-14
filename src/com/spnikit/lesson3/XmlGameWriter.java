@@ -40,11 +40,12 @@ class XmlGameWriter {
         }
     }
 
-    public void writeChars(String chars){
+    public void writeChars(String chars) {
         Objects.requireNonNull(chars, "Null provided as XML element body");
 
         try {
             xmlsw.writeCharacters(chars);
+            xmlsw.writeCharacters("\n");
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
@@ -57,7 +58,11 @@ class XmlGameWriter {
         try {
             xmlsw.writeCharacters("  ");
 
-            xmlsw.writeStartElement(elementName);
+            if (characters.length > 0) {
+                xmlsw.writeStartElement(elementName);
+            } else {
+                xmlsw.writeEmptyElement(elementName); // if there are no body of XML tag write selfclosing tag
+            }
 
             if (attributes != null && attributes.size() > 0) {
                 attributes.forEach((key, value) -> {
@@ -79,7 +84,10 @@ class XmlGameWriter {
                 });
             }
 
-            xmlsw.writeEndElement();
+            if (characters.length > 0) {
+                xmlsw.writeEndElement();
+            }
+
             xmlsw.writeCharacters("\n");
 
         } catch (XMLStreamException e) {

@@ -8,7 +8,8 @@ class Player {
     private final Token token;
 
 
-    Player(String name, PlayerNumber playerNumber) {
+
+    public Player(String name, PlayerNumber playerNumber) {
         this.name = name;
         this.token = playerNumber == PlayerNumber.ONE ? Token.X : Token.O;
     }

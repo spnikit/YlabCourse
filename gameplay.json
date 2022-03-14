@@ -1,0 +1,39 @@
+{
+  "player1": {
+    "name": "peter",
+    "numberOfMoves": 0,
+    "token": "X"
+  },
+  "player2": {
+    "name": "sanjo",
+    "numberOfMoves": 0,
+    "token": "O"
+  },
+  "winner": {
+    "name": "peter",
+    "numberOfMoves": 0,
+    "token": "X"
+  },
+  "steps": [
+    {
+      "number": 1,
+      "playerNumber": "1"
+    },
+    {
+      "number": 2,
+      "playerNumber": "2"
+    },
+    {
+      "number": 3,
+      "playerNumber": "1"
+    },
+    {
+      "number": 4,
+      "playerNumber": "2"
+    },
+    {
+      "number": 5,
+      "playerNumber": "1"
+    }
+  ]
+}

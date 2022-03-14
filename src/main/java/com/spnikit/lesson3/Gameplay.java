@@ -1,14 +1,18 @@
 package com.spnikit.lesson3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 class Gameplay {
     private Player player1;
     private Player player2;
     private Player winner;
-    private final ArrayList<Step> steps = new ArrayList<>();
+
+    public void setSteps(ArrayList<Step> steps) {
+        this.steps = steps;
+    }
+
+    private ArrayList<Step> steps = new ArrayList<>();
 
 
     public Player getPlayer1() {

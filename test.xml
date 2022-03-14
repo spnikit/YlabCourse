@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Gameplay>
+  <Player id="1" name="kol" symbol="X"></Player>
+  <Player id="2" name="hui" symbol="O"></Player>
+  <Step playerId="1" num="1">x: 0 y: 0</Step>
+  <Step playerId="2" num="2">x: 1 y: 1</Step>
+  <Step playerId="1" num="3">x: 2 y: 2</Step>
+  <Step playerId="2" num="4">x: 1 y: 0</Step>
+  <Step playerId="1" num="5">x: 2 y: 1</Step>
+  <Step playerId="2" num="6">x: 1 y: 2</Step>
+<GameResult>
+  <Player id="2" name="hui" symbol="O"></Player>
+</GameResult>
+</Gameplay>

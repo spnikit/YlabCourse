@@ -1,5 +1,7 @@
 package com.spnikit.lesson3;
 
+import java.util.Objects;
+
 class Player {
     private final String name;
     private int numberOfMoves = 0;
@@ -34,5 +36,18 @@ class Player {
                 "name='" + name + '\'' +
                 ", numberOfMoves=" + numberOfMoves +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return name.equals(player.name) && token == player.token;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, token);
     }
 }

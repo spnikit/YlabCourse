@@ -41,7 +41,7 @@ class XmlGameWriter {
     }
 
     public void writeChars(String chars){
-        Objects.requireNonNull(chars, () -> "Null provided as XML element body");
+        Objects.requireNonNull(chars, "Null provided as XML element body");
 
         try {
             xmlsw.writeCharacters(chars);
@@ -51,7 +51,7 @@ class XmlGameWriter {
     }
 
     public void writeElementWithAttributes(String elementName, Map<String, String> attributes, String... characters) {
-        Objects.requireNonNull(elementName, () -> "XML element name can't be Null");
+        Objects.requireNonNull(elementName, "XML element name can't be Null");
 
 
         try {
@@ -88,7 +88,7 @@ class XmlGameWriter {
     }
 
     public void writeStartElement(String elementName) {
-        Objects.requireNonNull(elementName, () -> "XML Element name can't be null");
+        Objects.requireNonNull(elementName, "XML Element name can't be null");
 
         try {
             xmlsw.writeStartElement(elementName);

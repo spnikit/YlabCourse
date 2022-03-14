@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-            new Game().play(new XmlGameWriter("./test.xml"));
+//            new Game().play(new XmlGameWriter("./test.xml"));
 
-//        new Game().replay(new XmlGameReader("./temp.xml").getGameplay());
+        new Game().replay(new XmlGameReader("./temp.xml").getGameplay());
 
     }
 }

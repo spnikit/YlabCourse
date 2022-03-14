@@ -11,10 +11,6 @@ class Game {
     private Player player2;
     private GameBoard board;
     private final IOManager manager = new IOManager();
-    private XmlGameWriter xmlw;
-
-
-
 
     private Player getPlayer(PlayerNumber pn) {
         Optional<String> playerName;
@@ -121,7 +117,7 @@ class Game {
             xmlw.endDocument();
             xmlw.flushAndClose();
 
-        } while (isPlayAgain());
+        } while (doPlayAgain());
 
 
         finishGame();
@@ -136,7 +132,7 @@ class Game {
         }
     }
 
-    public boolean isPlayAgain() {
+    public boolean doPlayAgain() {
 
         Optional<String> yesOrNo;
         do {
@@ -153,7 +149,7 @@ class Game {
 
     public void replay(Gameplay gameplay) {
 
-//        do {
+        do {
             manager.printToConsole("Привет, сейчас начнется игра в крестики-нолики");
 
             player1 = gameplay.getPlayer1();
@@ -168,13 +164,10 @@ class Game {
 
             replayOneRound(gameplay);
 
-
-//        } while (isPlayAgain());
-
+        } while (doPlayAgain());
 
         finishGame();
         manager.printToConsole("Игра окончена!");
-
 
     }
 

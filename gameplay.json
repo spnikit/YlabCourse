@@ -6,10 +6,10 @@
   },
   "player2": {
     "name": "pete",
-    "numberOfMoves": 3,
+    "numberOfMoves": 2,
     "token": "O"
   },
-  "gameResult": "Player2",
+  "gameResult": "Player1",
   "steps": [
     {
       "number": 1,
@@ -25,27 +25,21 @@
     },
     {
       "number": 3,
-      "xCoord": 2,
-      "yCoord": 2,
+      "xCoord": 0,
+      "yCoord": 1,
       "playerNumber": "1"
     },
     {
       "number": 4,
-      "xCoord": 0,
+      "xCoord": 2,
       "yCoord": 2,
       "playerNumber": "2"
     },
     {
       "number": 5,
       "xCoord": 0,
-      "yCoord": 1,
+      "yCoord": 2,
       "playerNumber": "1"
-    },
-    {
-      "number": 6,
-      "xCoord": 2,
-      "yCoord": 0,
-      "playerNumber": "2"
     }
   ]
 }

@@ -3,11 +3,13 @@ package com.spnikit.lesson3;
 import java.util.Objects;
 
 class Player {
-    private final String name;
+    private String name;
     private int numberOfMoves = 0;
-    private final Token token;
+    private Token token;
 
 
+    public Player() {
+    }
 
     public Player(String name, PlayerNumber playerNumber) {
         this.name = name;
@@ -18,7 +20,7 @@ class Player {
         this.numberOfMoves = numberOfMoves;
     }
 
-    public void makeMove(){
+    public void makeMove() {
         this.numberOfMoves += 1;
     }
 

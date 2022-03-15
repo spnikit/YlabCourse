@@ -2,66 +2,42 @@ package com.spnikit.lesson3;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        var game = new Game();
-
-        var createGameplay = new CreateGameplay(game);
-
-        game.play();
-
-        Gameplay gameplay = createGameplay.getGameplay();
-
-        System.out.println(gameplay);
-
-        // Write to JSON
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new FileWriter("./gameplay.json"), gameplay);
-
-
-    }
-}
-
-class CreateGameplay implements PlayerMoved, PlayerRegistered, GameStarted, GameEnded {
-    private final Gameplay gameplay = new Gameplay();
-
-    public CreateGameplay(Game game) {
-        game.addGameEndListener(this);
-        game.addGameStartListener(this);
-        game.addPlayerRegisteredListener(this);
-        game.addPlayerMovedListener(this);
-    }
+        // Create new game
+//        var game = new Game();
+//
+//        //  Subscribe to the game listeners to construct gameplay object
+//        var createGameplay = new GameplayConstructor(game);
+//
+//        // play the game
+//        game.play();
+//
+//        // get constructed gameplay object
+//        Gameplay gameplay = createGameplay.getGameplay();
+//
+//        // Write gameplay object to JSON
+//        new GameplayToJsonMapper().writeJSON("./gameplay.json", gameplay);
 
 
-    public Gameplay getGameplay() {
-        return this.gameplay;
-    }
+        // Game replay from JSON
 
-    @Override
-    public void onPlayerMoved(int xCoord, int yCoord, Player player, int moveNumber) {
-        var playerNumber = player.getToken() == Token.X ? "1" : "2";
-        gameplay.addStep(new Step(moveNumber, xCoord, yCoord, playerNumber));
-    }
+        // Create gameplay object from JSON
+        Optional<Gameplay> gameplay = new GameplayToJsonMapper().readJSON("./gameplay.json");
 
-    @Override
-    public void onPlayerRegister(Player player) {
-        gameplay.setPlayer(player);
-    }
+        // replay the game with gameplay object
+        gameplay.ifPresentOrElse(game -> new Game().replay(game),
+                () -> System.out.println("Gameplay object is not valid or not present"));
 
-    @Override
-    public void onGameStart() {
 
-    }
-
-    @Override
-    public void onGameEnd(String gameResult) {
-        gameplay.setGameResult(gameResult);
     }
 }
 

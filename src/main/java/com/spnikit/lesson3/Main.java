@@ -1,11 +1,5 @@
 package com.spnikit.lesson3;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Main {

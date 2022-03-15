@@ -6,7 +6,7 @@ import java.util.List;
 class Gameplay {
     private Player player1;
     private Player player2;
-    private Player winner;
+    private String gameResult;
 
     public void setSteps(ArrayList<Step> steps) {
         this.steps = steps;
@@ -17,6 +17,14 @@ class Gameplay {
 
     public Player getPlayer1() {
         return player1;
+    }
+
+    public void setPlayer(Player player){
+        if(player.getToken() == Token.X){
+            setPlayer1(player);
+        }else {
+            setPlayer2(player);
+        }
     }
 
     public void setPlayer1(Player player1) {
@@ -31,12 +39,12 @@ class Gameplay {
         this.player2 = player2;
     }
 
-    public Player getWinner() {
-        return winner;
+    public String getGameResult() {
+        return gameResult;
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
+    public void setGameResult(String gameResult) {
+        this.gameResult = gameResult;
     }
 
     public List<Step> getSteps(){
@@ -53,7 +61,7 @@ class Gameplay {
         return "Gameplay{" +
                 "player1=" + player1 +
                 ", player2=" + player2 +
-                ", winner=" + winner +
+                ", winner=" + gameResult +
                 ", steps=" + steps +
                 '}';
     }

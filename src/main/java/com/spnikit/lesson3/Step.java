@@ -27,7 +27,7 @@ public class Step{
         this.number = number;
     }
 
-    public int xCoord() {
+    public int getxCoord() {
         return xCoord;
     }
 
@@ -35,7 +35,7 @@ public class Step{
         this.xCoord = xCoord;
     }
 
-    public int yCoord() {
+    public int getyCoord() {
         return yCoord;
     }
 
@@ -49,5 +49,16 @@ public class Step{
 
     public void setPlayerNumber(String playerNumber) {
         this.playerNumber = playerNumber;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "number=" + number +
+                ", xCoord=" + xCoord +
+                ", yCoord=" + yCoord +
+                ", playerNumber='" + playerNumber + '\'' +
+                '}';
     }
 }

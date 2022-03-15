@@ -1,39 +1,51 @@
 {
   "player1": {
-    "name": "peter",
-    "numberOfMoves": 0,
+    "name": "serge",
+    "numberOfMoves": 3,
     "token": "X"
   },
   "player2": {
-    "name": "sanjo",
-    "numberOfMoves": 0,
+    "name": "pete",
+    "numberOfMoves": 3,
     "token": "O"
   },
-  "winner": {
-    "name": "peter",
-    "numberOfMoves": 0,
-    "token": "X"
-  },
+  "gameResult": "Player2",
   "steps": [
     {
       "number": 1,
+      "xCoord": 0,
+      "yCoord": 0,
       "playerNumber": "1"
     },
     {
       "number": 2,
+      "xCoord": 1,
+      "yCoord": 1,
       "playerNumber": "2"
     },
     {
       "number": 3,
+      "xCoord": 2,
+      "yCoord": 2,
       "playerNumber": "1"
     },
     {
       "number": 4,
+      "xCoord": 0,
+      "yCoord": 2,
       "playerNumber": "2"
     },
     {
       "number": 5,
+      "xCoord": 0,
+      "yCoord": 1,
       "playerNumber": "1"
+    },
+    {
+      "number": 6,
+      "xCoord": 2,
+      "yCoord": 0,
+      "playerNumber": "2"
     }
   ]
 }

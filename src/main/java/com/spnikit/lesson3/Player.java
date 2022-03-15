@@ -18,12 +18,15 @@ class Player {
         this.numberOfMoves = numberOfMoves;
     }
 
+    public void makeMove(){
+        this.numberOfMoves += 1;
+    }
+
     public int getNumberOfMoves() {
         return numberOfMoves;
     }
 
     public Token getToken() {
-        this.setNumberOfMoves(this.numberOfMoves + 1);
         return token;
     }
 

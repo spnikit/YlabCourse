@@ -2,16 +2,37 @@ package com.spnikit.lesson3;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
+
+
 
 class Game {
     private Player player1;
     private Player player2;
     private GameBoard board;
     private final IOManager manager = new IOManager();
+    private final List<PlayerMoved> playerMovedListeners = new ArrayList<>();
+    private final List<PlayerRegistered> playerRegisteredListeners = new ArrayList<>();
+    private final List<GameStarted> gameStartListeners = new ArrayList<>();
+    private final List<GameEnded> gameEndListeners = new ArrayList<>();
+
+
+    public void addPlayerMovedListener(PlayerMoved listener) {
+        playerMovedListeners.add(listener);
+    }
+
+    public void addPlayerRegisteredListener(PlayerRegistered listener) {
+        playerRegisteredListeners.add(listener);
+    }
+
+    public void addGameStartListener(GameStarted listener) {
+        gameStartListeners.add(listener);
+    }
+
+    public void addGameEndListener(GameEnded listener) {
+        gameEndListeners.add(listener);
+    }
+
 
     private Player getPlayer(PlayerNumber pn) {
         Objects.requireNonNull(pn, "PlayerNumber object can't be null");
@@ -44,8 +65,7 @@ class Game {
         return coordinate.getAsInt();
     }
 
-    private void playOneRound(XmlGameWriter xmlw) {
-        Objects.requireNonNull(xmlw, "XmlGameWriter object can't be null");
+    private void playOneRound() {
 
         board = new GameBoard();
         board.printBoard();
@@ -61,11 +81,12 @@ class Game {
 
             try {
                 board.acceptMove(x, y, playerToMove.getToken());
-                xmlw.writeElementWithAttributes(
-                        "Step",
-                        Map.of("num", numberOfMoves + "",
-                                "playerId", playerToMove.equals(player1) ? "1" : "2"),
-                        "x: " + x, " y: " + y);
+                playerToMove.makeMove();
+
+                for(var listener : playerMovedListeners){
+                    listener.onPlayerMoved(x, y, playerToMove, numberOfMoves);
+                }
+
             } catch (IllegalArgumentException e) {
                 manager.printToConsole(e.getMessage());
                 continue;
@@ -79,57 +100,43 @@ class Game {
 
         } while (!board.isDraw());
 
-        xmlw.writeStartElement("GameResult");
-
         if (board.isWinner()) {
             Player winner = (turn) ? player2 : player1;
             manager.printToConsole("Победил : " + winner.getName());
             manager.writeMatchResults(LocalDate.now() + " - Победил " + winner.getName() + " за "
                     + winner.getNumberOfMoves() + " ходов!");
-            xmlw.writeElementWithAttributes("Player", Map.of("name", winner.getName(),
-                    "symbol", winner.getToken().toString(),
-                    "id", winner.equals(player1) ? "1" : "2"));
+
+            var gameResult = winner.getToken() == Token.X ? "Player1" : "Player2";
+            gameEndListeners.forEach(listener -> listener.onGameEnd(gameResult));
+
 
         } else {
             manager.printToConsole("Ничья!");
             manager.writeMatchResults(LocalDate.now() + " Ничья ");
-            xmlw.writeChars("DRAW");
+
+            gameEndListeners.forEach(listener -> listener.onGameEnd("Ничья"));
+
         }
 
-        xmlw.writeEndElement();
     }
 
-    public void play(XmlGameWriter xmlw) {
-        Objects.requireNonNull(xmlw, "XmlGameWriter object can't be null");
-
+    public void play() {
 
         do {
             manager.printToConsole("Привет, сейчас начнется игра в крестики-нолики");
+            gameStartListeners.forEach(listener -> listener.onGameStart());
 
-            xmlw.startDocument();
-            xmlw.writeStartElement("Gameplay");
 
             player1 = getPlayer(PlayerNumber.ONE);
-            var name1 = player1.getName();
-            var symbol1 = player1.getToken().toString();
 
-            xmlw.writeElementWithAttributes("Player", Map.of("name", name1,
-                    "symbol", symbol1,
-                    "id", player1.getToken() == Token.X ? "1" : "2"));
+            playerRegisteredListeners.forEach(listener -> listener.onPlayerRegister(player1));
 
             player2 = getPlayer(PlayerNumber.TWO);
-            var name2 = player2.getName();
-            var symbol2 = player2.getToken().toString();
 
-            xmlw.writeElementWithAttributes("Player", Map.of("name", name2,
-                    "symbol", symbol2,
-                    "id", player2.getToken() == Token.X ? "1" : "2"));
+            playerRegisteredListeners.forEach(listener -> listener.onPlayerRegister(player2));
 
-            playOneRound(xmlw);
 
-            xmlw.writeEndElement();
-            xmlw.endDocument();
-            xmlw.flushAndClose();
+            playOneRound();
 
         } while (doPlayAgain());
 
@@ -138,7 +145,7 @@ class Game {
         manager.printToConsole("Игра окончена!");
     }
 
-    public void finishGame() {
+    private void finishGame() {
         try {
             manager.finish();
         } catch (IOException e) {
@@ -146,7 +153,7 @@ class Game {
         }
     }
 
-    public boolean doPlayAgain() {
+    private boolean doPlayAgain() {
 
         Optional<String> yesOrNo;
         do {
@@ -186,7 +193,7 @@ class Game {
 
     }
 
-    public void replayOneRound(Gameplay gameplay) {
+    private void replayOneRound(Gameplay gameplay) {
         Objects.requireNonNull(gameplay, "Gameplay object can't be null");
 
 
@@ -203,8 +210,8 @@ class Game {
 
             Player playerToMove = turn ? player1 : player2;
 
-            int x = step.xCoord();
-            int y = step.yCoord();
+            int x = step.getxCoord();
+            int y = step.getyCoord();
 
             try {
                 board.acceptMove(x, y, playerToMove.getToken());

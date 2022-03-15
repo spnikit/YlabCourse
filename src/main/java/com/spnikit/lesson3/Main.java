@@ -4,48 +4,64 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        var game = new Game();
 
-        Gameplay gameplay = new XmlGameReader("./temp.xml").getGameplay();
+        var createGameplay = new CreateGameplay(game);
+
+        game.play();
+
+        Gameplay gameplay = createGameplay.getGameplay();
+
+        System.out.println(gameplay);
+
+        // Write to JSON
         ObjectMapper mapper = new ObjectMapper();
-
         mapper.writeValue(new FileWriter("./gameplay.json"), gameplay);
 
 
     }
 }
 
+class CreateGameplay implements PlayerMoved, PlayerRegistered, GameStarted, GameEnded {
+    private final Gameplay gameplay = new Gameplay();
 
-
-class Person {
-    private String firstname;
-    private String lastname;
-
-    public String getFirstname() {
-        return firstname;
+    public CreateGameplay(Game game) {
+        game.addGameEndListener(this);
+        game.addGameStartListener(this);
+        game.addPlayerRegisteredListener(this);
+        game.addPlayerMovedListener(this);
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public Gameplay getGameplay() {
+        return this.gameplay;
     }
 
     @Override
-    public String toString() {
-        return "Person{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
+    public void onPlayerMoved(int xCoord, int yCoord, Player player, int moveNumber) {
+        var playerNumber = player.getToken() == Token.X ? "1" : "2";
+        gameplay.addStep(new Step(moveNumber, xCoord, yCoord, playerNumber));
+    }
+
+    @Override
+    public void onPlayerRegister(Player player) {
+        gameplay.setPlayer(player);
+    }
+
+    @Override
+    public void onGameStart() {
+
+    }
+
+    @Override
+    public void onGameEnd(String gameResult) {
+        gameplay.setGameResult(gameResult);
     }
 }
+

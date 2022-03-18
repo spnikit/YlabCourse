@@ -32,7 +32,7 @@ class GameplayConstructor implements PlayerMoved, PlayerRegistered, GameStarted,
     }
 
     @Override
-    public void onGameEnd(String gameResult) {
+    public void onGameEnd(Player gameResult) {
         gameplay.setGameResult(gameResult);
     }
 }

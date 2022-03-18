@@ -106,15 +106,15 @@ class Game {
             manager.writeMatchResults(LocalDate.now() + " - Победил " + winner.getName() + " за "
                     + winner.getNumberOfMoves() + " ходов!");
 
-            var gameResult = winner.getToken() == Token.X ? "Player1" : "Player2";
-            gameEndListeners.forEach(listener -> listener.onGameEnd(gameResult));
+
+            gameEndListeners.forEach(listener -> listener.onGameEnd(winner));
 
 
         } else {
             manager.printToConsole("Ничья!");
             manager.writeMatchResults(LocalDate.now() + " Ничья ");
 
-            gameEndListeners.forEach(listener -> listener.onGameEnd("Ничья"));
+            gameEndListeners.forEach(listener -> listener.onGameEnd(null));
 
         }
 
@@ -124,7 +124,7 @@ class Game {
 
         do {
             manager.printToConsole("Привет, сейчас начнется игра в крестики-нолики");
-            gameStartListeners.forEach(listener -> listener.onGameStart());
+            gameStartListeners.forEach(GameStarted::onGameStart);
 
 
             player1 = getPlayer(PlayerNumber.ONE);

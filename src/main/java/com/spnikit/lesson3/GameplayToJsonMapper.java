@@ -1,20 +1,24 @@
 package com.spnikit.lesson3;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-class GameplayToJsonMapper {
+class GameplayToJsonMapper implements GameplayToFileMapper<Gameplay> {
     ObjectMapper mapper;
 
     public GameplayToJsonMapper() {
         mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
+        mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
     }
 
-    public void writeJSON(String filename, Gameplay gameplay) {
+    public void writeToFile(String filename, Gameplay gameplay) {
         try {
             mapper.writeValue(new File(Objects.requireNonNull(filename)), Objects.requireNonNull(gameplay));
         } catch (IOException e) {
@@ -23,7 +27,7 @@ class GameplayToJsonMapper {
         }
     }
 
-    public Optional<Gameplay> readJSON(String filename) {
+    public Optional<Gameplay> readFromFile(String filename) {
         Optional<Gameplay> gameplay;
         try {
             gameplay = Optional.of(mapper.readValue(new File(Objects.requireNonNull(filename)), Gameplay.class));

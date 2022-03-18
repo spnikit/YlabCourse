@@ -3,12 +3,15 @@ package com.spnikit.lesson3;
 //public record Step(int number, int xCoord, int yCoord, String playerNumber) {
 //}
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Step{
 
     private int number;
     private int xCoord;
     private int yCoord;
-    String playerNumber;
+    private String playerNumber;
 
     public Step(){}
 
@@ -19,10 +22,12 @@ public class Step{
         this.playerNumber = playerNumber;
     }
 
+    @JsonGetter("_num")
     public int getNumber() {
         return number;
     }
 
+    @JsonSetter("_num")
     public void setNumber(int number) {
         this.number = number;
     }
@@ -43,10 +48,12 @@ public class Step{
         this.yCoord = yCoord;
     }
 
+    @JsonGetter("_playerId")
     public String getPlayerNumber() {
         return playerNumber;
     }
 
+    @JsonSetter("_playerId")
     public void setPlayerNumber(String playerNumber) {
         this.playerNumber = playerNumber;
     }

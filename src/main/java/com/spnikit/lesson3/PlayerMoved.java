@@ -15,5 +15,5 @@ interface GameStarted{
 }
 
 interface GameEnded{
-    void onGameEnd(String gameResult);
+    void onGameEnd(Player gameResult);
 }

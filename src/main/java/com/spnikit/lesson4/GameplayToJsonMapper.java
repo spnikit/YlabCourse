@@ -16,6 +16,7 @@ class GameplayToJsonMapper implements GameplayToFileMapper<Gameplay> {
         mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
         mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public void writeToFile(String filename, Gameplay gameplay) {
